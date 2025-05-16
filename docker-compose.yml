@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: prospect_db
+      POSTGRES_USER: prospect_user
+      POSTGRES_PASSWORD: prospect_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+volumes:
+  postgres_data: 
+  
